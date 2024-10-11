@@ -1,7 +1,19 @@
-version: 1
 services:
   - type: web
     name: traccar-server
-    env: docker
-    dockerfilePath: ./Dockerfile
-    autoDeploy: true
+    env: java
+    buildCommand: "./gradlew assemble"
+    startCommand: "java -jar ./tracker-server.jar"
+    plan: free
+    region: oregon
+    envVars:
+      - key: DATABASE_URL
+        value: "postgresql://admin:4qPD7wdWWK3GGdbOac50DlW6CZ1cOnyE@dpg-cs4qs8i3esus73al3tl0-a/traccar"
+      - key: JAVA_VERSION
+        value: "11"
+
+databases:
+  - type: postgresql
+    name: traccar-db
+    plan: free
+    region: oregon
